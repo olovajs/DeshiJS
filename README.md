@@ -20,7 +20,7 @@ Olova (meaning "simple" in Tsonga) is a lightweight, modern JavaScript framework
 ## 📦 Installation
 
 ```bash
-npm install olova
+npm create vilo@latest
 ```
 
 ## 🚀 Quick Start
