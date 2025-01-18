@@ -1,99 +1,261 @@
 <div align="center">
 <img src="assets/olova.png" width="150" alt="OlovaJS Logo">
 
-# OlovaJS
+# 🚀 Olova Framework Documentation
 
-### A Modern, Lightweight JavaScript Framework for Intuitive Web Development
-
-[![npm](https://img.shields.io/npm/v/olova)](https://www.npmjs.com/package/olova)
-[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen)](https://olova.js.org/Introduction.html)
-[![Twitter Follow](https://img.shields.io/twitter/follow/olova_js?style=social)](https://x.com/olova_js)
-
-[Documentation](https://olova.js.org/Introduction.html) | [Discord](https://discord.gg/ZUcKggZhga)
-
-</div>
+> A lightweight JavaScript framework for building web applications with JSX
 
 ## 🌟 What is Olova?
 
-Olova (meaning "simple" in Tsonga) is a lightweight, modern JavaScript framework that streamlines web development while maintaining powerful functionality. It provides a seamless development experience whether you prefer working with HTML, JavaScript, or functional components.
+Olova is a simple yet powerful JavaScript framework that lets you build web
+applications using JSX. It directly manipulates the DOM without a Virtual DOM,
+making it lightweight and straightforward to use.
 
-## 📦 Installation
+## ⚡ Quick Start
+
+### Installation
+
+Get started with a single command:
 
 ```bash
 npm create vilo@latest
 ```
 
-## 🚀 Quick Start
+This command will set up a new Olova project, similar to how Vite works. You can
+use it to create an Olova template or install Olova in an existing project.
 
-```html
-<div id="app">
-  <template>
-    <div>
-      <div>{ count }</div>
-      <button @click="increment">Increment</button>
-    </div>
-  </template>
-</div>
+Alternatively, you can install Olova directly:
 
-<script type="module">
-  import { createApp } from "olova";
-  const app = createApp({
-    data: {
-      count: 0,
-    },
-    methods: {
-      increment() {
-        this.count++;
-      },
-    },
-  });
-  app.mount("#app");
-</script>
+```bash
+npm install olova
 ```
 
-## ✨ Key Features
+### Your First Olova App
 
-- **Dual Rendering Approaches**
-  - HTML-first development
-  - JavaScript-driven components
-  - Functional programming style support
-- **Built-in Reactivity System**
-  - Automatic UI synchronization
-  - Efficient state management
-  - Real-time updates
-- **Developer-Friendly**
-  - Minimal learning curve
-  - Flexible architecture
-  - Clean, intuitive templates
+```jsx
+import Olova from "olova";
 
-## 📚 Documentation
+const App = () => {
+  return (
+    <>
+      <h1>Welcome to Olova! 🎉</h1>
+      <p>Building web apps made simple.</p>
+    </>
+  );
+};
+```
 
-Visit our comprehensive documentation at [olova.js.org](https://olova.js.org/Introduction.html) to learn more about:
+## 🎯 Core Concepts
 
-- Getting Started Guide
-- Core Concepts
-- API Reference
-- Best Practices
+### Built-in Hooks
 
-## 💡 Why Choose Olova?
+Olova provides several essential hooks for building dynamic applications:
 
-- **Simplicity First**: True to its name, Olova prioritizes simplicity without sacrificing functionality
-- **Flexible Architecture**: Choose your preferred coding style - HTML, JavaScript, or functional
-- **Performance Focused**: Lightweight core with powerful reactive capabilities
-- **Modern Development**: Built with modern web development practices in mind
+```jsx
+import {
+  State, // Manage component state
+  Effect, // Handle side effects
+  Memo, // Memoize values
+  Ref, // Reference DOM elements
+  Context, // Share data between components
+  Callback, // Memoize functions
+} from "olova";
+```
+
+### Default Exports
+
+Olova comes with two built-in utilities:
+
+```jsx
+import Olova, { h, Fragment } from "olova";
+
+// h: Element generator (automatically used for JSX transformation)
+// Fragment: Wrapper for multiple elements, can be used as <></> or <Fragment></Fragment>
+```
+
+## 💫 Using Hooks
+
+### State Management
+
+```jsx
+import Olova, { State } from "olova";
+
+const Counter = () => {
+  const [count, setCount] = State(0);
+
+  return <button onClick={() => setCount(count + 1)}>Count: {count}</button>;
+};
+```
+
+### Side Effects
+
+```jsx
+import Olova, { Effect, State } from "olova";
+
+const DataFetcher = () => {
+  const [data, setData] = State(null);
+
+  Effect(() => {
+    fetch("/api/data")
+      .then((res) => res.json())
+      .then(setData);
+  }, []); // Empty array means run once on mount
+
+  return <div>{data ? "Data loaded!" : "Loading..."}</div>;
+};
+```
+
+### Using References
+
+```jsx
+import Olova, { Ref } from "olova";
+
+const FocusInput = () => {
+  const inputRef = Ref(null);
+
+  return <input ref={inputRef} onFocus={() => console.log("Input focused!")} />;
+};
+```
+
+### Memoization
+
+```jsx
+import Olova, { Memo, State } from "olova";
+
+const ExpensiveComponent = ({ data }) => {
+  const processedData = Memo(() => {
+    // Expensive computation here
+    return data.map((item) => item * 2);
+  }, [data]);
+
+  return <div>{processedData.join(", ")}</div>;
+};
+```
+
+## 🎨 Styling in Olova
+
+Olova supports all standard CSS approaches:
+
+### CSS Imports
+
+```jsx
+import "./styles.css";
+
+const StyledComponent = () => (
+  <div className="my-component">Styled content</div>
+);
+```
+
+### CSS Modules
+
+```jsx
+import styles from "./Component.module.css";
+
+const ModuleStyledComponent = () => (
+  <div className={styles.container}>Module styled content</div>
+);
+```
+
+### Inline Styles
+
+```jsx
+const InlineStyledComponent = () => (
+  <div style={{ padding: "20px", color: "blue" }}>Inline styled content</div>
+);
+```
+
+## 🔮 How Olova Works
+
+1. **Direct DOM Manipulation**
+
+1. Olova directly updates the DOM without a Virtual DOM
+1. Efficient updates when state changes
+1. Lightweight and fast performance
+
+1. **JSX Transformation**
+
+1. Uses the `h` function to transform JSX into DOM elements
+1. Handles event binding automatically
+1. Manages component lifecycle efficiently
+
+## 📚 Best Practices
+
+### Component Structure
+
+```jsx
+// Good: Single responsibility component
+const UserProfile = ({ user }) => (
+  <div className="profile">
+    <img src={user.avatar || "/placeholder.svg"} alt={user.name} />
+    <h2>{user.name}</h2>
+  </div>
+);
+
+// Better: Using Fragment for multiple elements
+const UserCard = ({ user }) => (
+  <>
+    <UserProfile user={user} />
+    <UserStats stats={user.stats} />
+  </>
+);
+```
+
+### Hook Usage
+
+```jsx
+// Effective use of multiple hooks
+const UserDashboard = () => {
+  const [user, setUser] = State(null);
+  const userCache = Ref({});
+
+  Effect(() => {
+    // Side effect cleanup example
+    return () => {
+      userCache.current = {};
+    };
+  }, []);
+
+  return <div>Dashboard Content</div>;
+};
+```
+
+## 🚀 Coming Soon
+
+- More built-in hooks
+- Enhanced development tools
+- Additional utility functions
+- Performance optimizations
 
 ## 🤝 Contributing
 
-We welcome contributions! Please feel free to submit a PR or open an issue.
+We welcome contributions! Whether it's:
 
-## 🌐 Community
+- Bug reports
+- Feature requests
+- Documentation improvements
+- Pull requests
 
-Join our growing community:
+## 📖 Examples
 
-- [Discord](https://discord.gg/ZUcKggZhga) - Get help and discuss features
-- [X (Twitter)](https://x.com/olova_js) - Stay updated with latest news
-- [Website](https://olova.js.org) - Official website and documentation
+Find more examples in our [GitHub repository](https://github.com/olovajs/olova).
 
-## 📄 License
+## 🛠 Using Vilo
 
-[MIT License](LICENSE) - Feel free to use Olova in your projects!
+Vilo is a project creation tool for Olova, similar to Vite. You can use it to
+quickly set up new Olova projects or add Olova to existing projects.
+
+To create a new Olova project:
+
+```bash
+npm create vilo@latest my-olova-app
+cd my-olova-app
+npm install
+npm run dev
+```
+
+This will set up a new Olova project with a basic template, ready for you to
+start developing.
+
+---
+
+Made with simplicity in mind 🌟
