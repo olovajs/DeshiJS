@@ -1,5 +1,6 @@
 <div align="center">
 <img src="assets/olova.png" width="150" alt="OlovaJS Logo">
+</div>
 
 # 🚀 Olova Framework Documentation
 
