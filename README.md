@@ -1,12 +1,8 @@
-<div align="center">
-<img src="assets/olova.png" width="150" alt="OlovaJS Logo">
-</div>
-
 # 🚀 Olova Framework Documentation
 
 > A lightweight JavaScript framework for building web applications with JSX
 
-## 🌟 What is Olova?
+## What is Olova?
 
 Olova is a simple yet powerful JavaScript framework that lets you build web
 applications using JSX. It directly manipulates the DOM without a Virtual DOM,
@@ -54,12 +50,12 @@ Olova provides several essential hooks for building dynamic applications:
 
 ```jsx
 import {
-  State, // Manage component state
-  Effect, // Handle side effects
-  Memo, // Memoize values
-  Ref, // Reference DOM elements
-  Context, // Share data between components
-  Callback, // Memoize functions
+  $signal, // Manage component state
+  $effect, // Handle side effects
+  $memo, // Memoize values
+  $ref, // Reference DOM elements
+  $context, // Share data between components
+  $callback, // Memoize functions
 } from "olova";
 ```
 
@@ -79,7 +75,7 @@ import Olova, { h, Fragment } from "olova";
 ### State Management
 
 ```jsx
-import Olova, { State } from "olova";
+import Olova, { $signal } from "olova";
 
 const Counter = () => {
   const [count, setCount] = State(0);
@@ -91,7 +87,7 @@ const Counter = () => {
 ### Side Effects
 
 ```jsx
-import Olova, { Effect, State } from "olova";
+import Olova, { $effect, $signal } from "olova";
 
 const DataFetcher = () => {
   const [data, setData] = State(null);
@@ -109,10 +105,10 @@ const DataFetcher = () => {
 ### Using References
 
 ```jsx
-import Olova, { Ref } from "olova";
+import Olova, { $ref } from "olova";
 
 const FocusInput = () => {
-  const inputRef = Ref(null);
+  const inputRef = $ref(null);
 
   return <input ref={inputRef} onFocus={() => console.log("Input focused!")} />;
 };
@@ -121,7 +117,7 @@ const FocusInput = () => {
 ### Memoization
 
 ```jsx
-import Olova, { Memo, State } from "olova";
+import Olova, { $memo, $signal } from "olova";
 
 const ExpensiveComponent = ({ data }) => {
   const processedData = Memo(() => {
@@ -207,7 +203,7 @@ const UserCard = ({ user }) => (
 // Effective use of multiple hooks
 const UserDashboard = () => {
   const [user, setUser] = State(null);
-  const userCache = Ref({});
+  const userCache = $ref({});
 
   Effect(() => {
     // Side effect cleanup example
